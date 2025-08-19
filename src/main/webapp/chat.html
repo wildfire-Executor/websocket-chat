@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .talk_con {
+        width: 600px;
+        height: 500px;
+        margin: 50px auto;
+        background-color: #F5F5F5;
+        border: 1px solid #666666;
+    }
+
+    .talk_show {
+        width: 580px;
+        height: 420px;
+        margin: 10px auto;
+        background-color: #F8F8F8;
+        border: 1px solid #666666;
+        overflow-y: auto;
+    }
+
+    .talk_input {
+        margin: 10px auto;
+        width: 580px;
+    }
+
+    .talk_word {
+        width: 400px;
+        height: 26px;
+        float: left;
+        margin-left: 10px;
+        padding: 0;
+    }
+
+    .talk_send {
+        width: 60px;
+        height: 30px;
+        float: left;
+        margin-left: 10px;
+    }
+
+    .other {
+        margin: 10px;
+        text-align: left;
+    }
+
+    .self {
+        margin: 10px;
+        text-align: right;
+    }
+
+    .other span {
+        background-color: #FFECB3;
+        border-radius: 10px;
+        padding: 5px 10px;
+        display: inline-block
+    }
+
+    .self span {
+        background-color: #E3F2FD;
+        border-radius: 10px;
+        padding: 5px 10px;
+        display: inline-block
+    }
+</style>
+
+<body>
+    <div class="talk_con">
+        <div class="talk_show"></div>
+        <div class="talk_input">
+            <input class="talk_word" type="text" placeholder="输入消息...">
+            <input class="talk_send" type="button" value="发送">
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sendBottom = document.querySelector('.talk_send');
+            const messageInput = document.querySelector('.talk_word');
+            const talkShow = document.querySelector('.talk_show');
+            const username = "用户" + Math.floor(Math.random() * 1000);
+            const socket = new WebSocket("ws://localhost:8080/websocket/chat");
+            socket.onopen = () => { console.log(username + "已连接"); };
+            socket.onmessage = (event) => { displayMessage(event.data); };
+            socket.onclose = () => { console.log(username + "已断开"); };
+            socket.onerror = (error) => { console.error("出现错误:", error); };
+            function sendMessage() {
+                const text = messageInput.value.trim();
+                if (!text) return;
+                const msgObj = { from: username, text: text }
+                socket.send(JSON.stringify(msgObj));
+                messageInput.value = '';
+                messageInput.focus();
+            }
+            function displayMessage(msgStr) {
+                const msg = JSON.parse(msgStr);
+                const div = document.createElement('div');
+                div.className =(msg.from == username ? 'self' : 'other');
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'username';
+                nameSpan.textContent = msg.from + ":";
+                const textSpan = document.createElement('span');
+                textSpan.textContent = msg.text;
+                div.appendChild(nameSpan);
+                div.appendChild(textSpan);
+                talkShow.appendChild(div);
+                talkShow.scrollTop = talkShow.scrollHeight;
+            }
+            sendBottom.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
