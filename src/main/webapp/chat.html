@@ -81,7 +81,7 @@
             const messageInput = document.querySelector('.talk_word');
             const talkShow = document.querySelector('.talk_show');
             const username = "用户" + Math.floor(Math.random() * 1000);
-            const socket = new WebSocket("ws://localhost:8080/websocket/chat");
+           const socket = new WebSocket("wss://" + window.location.hostname + "/websocket/chat");
             socket.onopen = () => { console.log(username + "已连接"); };
             socket.onmessage = (event) => { displayMessage(event.data); };
             socket.onclose = () => { console.log(username + "已断开"); };

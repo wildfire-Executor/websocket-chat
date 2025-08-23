@@ -1,6 +1,4 @@
 package ws_demo;
-import netscape.javascript.JSObject;
-
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
