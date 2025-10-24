@@ -80,8 +80,9 @@
             const sendBottom = document.querySelector('.talk_send');
             const messageInput = document.querySelector('.talk_word');
             const talkShow = document.querySelector('.talk_show');
-            const username = "用户" + Math.floor(Math.random() * 1000);
-           const socket = new WebSocket("ws://" + window.location.hostname + ":8080/websocket/chat");
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username') || "用户" + Math.floor(Math.random() * 1000);
+            const socket = new WebSocket("ws://" + window.location.hostname + ":8080/websocket/chat");
             socket.onopen = () => { console.log(username + "已连接"); };
             socket.onmessage = (event) => { displayMessage(event.data); };
             socket.onclose = () => { console.log(username + "已断开"); };

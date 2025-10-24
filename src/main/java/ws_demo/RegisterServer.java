@@ -20,8 +20,8 @@ public class RegisterServer extends HttpServlet{
 
         try{
             String userId=UserDAO.register(username,password);
-            res.setContentType("application/json;charset=UTF-8");
-            res.getWriter().write("{\"userId\": \"" + userId + "\"}");
+            res.sendRedirect("login.html");
+            return;
 
 
         } catch (Exception e) {
@@ -29,6 +29,7 @@ public class RegisterServer extends HttpServlet{
             res.getWriter().write("注册失败"+e.getMessage());
 
         }
+        res.sendRedirect("chat.html");
     }
 
 }

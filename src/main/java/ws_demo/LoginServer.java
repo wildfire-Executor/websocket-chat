@@ -17,9 +17,10 @@ public class LoginServer extends HttpServlet{
         try{
             String userId=UserDAO.login(username,password);
             if(userId!=null){
-                res.getWriter().write("登陆成功!");
                 HttpSession session=req.getSession();
                 session.setAttribute("userId",username);
+                res.sendRedirect("chat.html?username="+username);
+                return;
             }else{
                 res.getWriter().write("登陆失败!请检查用户名或密码是否正确!");
             }
