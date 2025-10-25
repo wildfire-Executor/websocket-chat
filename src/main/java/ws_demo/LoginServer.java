@@ -22,10 +22,10 @@ public class LoginServer extends HttpServlet{
                 res.sendRedirect("chat.html?username="+username);
                 return;
             }else{
-                res.getWriter().write("登陆失败!请检查用户名或密码是否正确!");
+                res.getWriter().write("登录失败!请检查用户名或密码是否正确!");
             }
         } catch (Exception e) {
-           res.getWriter().write("登陆失败!"+e.getMessage());
+           res.getWriter().write("登录失败!"+e.getMessage());
         }
 
 
