@@ -7,7 +7,6 @@ public class chatDAO {
     private static final String url = "jdbc:mysql://localhost:3306/chat_people";
     private static final String username = "root";
     private static final String password = "SUTyyds666!";
-
     public static void SaveMessage(String sender, String content) {
         String sql = "insert into chat_message (sender,content) value (?,?)";
         try {

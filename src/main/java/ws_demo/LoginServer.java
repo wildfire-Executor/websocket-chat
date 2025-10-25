@@ -19,15 +19,13 @@ public class LoginServer extends HttpServlet{
             if(userId!=null){
                 HttpSession session=req.getSession();
                 session.setAttribute("userId",username);
-                res.sendRedirect("chat.html?username="+username);
+                res.sendRedirect("chat.html?username=" + username);
                 return;
             }else{
                 res.getWriter().write("登录失败!请检查用户名或密码是否正确!");
             }
         } catch (Exception e) {
-           res.getWriter().write("登录失败!"+e.getMessage());
+           res.getWriter().write("登录失败!" + e.getMessage());
         }
-
-
     }
 }

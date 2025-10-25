@@ -1,6 +1,5 @@
 package ws_demo;
 import java.security.SecureRandom;
-
 import java.sql.*;
 import java.util.UUID;
 import java.security.MessageDigest;
@@ -32,8 +31,8 @@ public class UserDAO {
     MessageDigest digest=MessageDigest.getInstance("SHA-256");
     byte []hash=digest.digest(passwordStr.getBytes("UTF-8"));
     String hashedPassword=hashPassword(passwordStr,salt);
-
     String sql="insert into users (id,username,password_hash,salt) values (?,?,?,?)";
+
     try(Connection conn=DriverManager.getConnection(url,username,password);
         PreparedStatement ps=conn.prepareStatement(sql);){
         ps.setString(1,userId);
@@ -72,8 +71,6 @@ public class UserDAO {
                   System.out.println("找不到用户!");
                   return null;
               }
-
-
           }
       }
 
