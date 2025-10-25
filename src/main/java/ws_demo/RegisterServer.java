@@ -20,16 +20,16 @@ public class RegisterServer extends HttpServlet{
 
         try{
             String userId=UserDAO.register(username,password);
-            res.sendRedirect("login.html");
+            res.sendRedirect("chat.html?username="+username);
             return;
 
 
         } catch (Exception e) {
             res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            res.getWriter().write("注册失败"+e.getMessage());
+            res.getWriter().write("注册失败 "+e.getMessage());
 
         }
-        res.sendRedirect("chat.html");
+
     }
 
 }

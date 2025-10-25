@@ -81,7 +81,12 @@
             const messageInput = document.querySelector('.talk_word');
             const talkShow = document.querySelector('.talk_show');
             const urlParams = new URLSearchParams(window.location.search);
-            const username = urlParams.get('username') || "用户" + Math.floor(Math.random() * 1000);
+            const username = urlParams.get('username') ;
+             if (!username) {
+               alert("未检测到用户信息，请重新登录");
+               window.location.href = "login.html";
+               return;
+            }
             const socket = new WebSocket("ws://" + window.location.hostname + ":8080/websocket/chat");
             socket.onopen = () => { console.log(username + "已连接"); };
             socket.onmessage = (event) => { displayMessage(event.data); };

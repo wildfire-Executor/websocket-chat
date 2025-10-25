@@ -26,7 +26,7 @@ public class UserDAO {
     }
 
     public static String register(String usernameStr,String passwordStr) throws Exception{
-
+        Class.forName("com.mysql.cj.jdbc.Driver");
     String userId =UUID.randomUUID().toString();
     String salt = generateSalt();
     MessageDigest digest=MessageDigest.getInstance("SHA-256");
